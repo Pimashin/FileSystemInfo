@@ -1,9 +1,7 @@
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 #include <windows.h>
 #include <iostream>
 
- class clusterIterator
+class clusterIterator
 {
 private:
 	HANDLE fileHandle;
@@ -18,6 +16,6 @@ public:
 	void Next();
 	bool IsDone();
 	BYTE* GetCurrent();
-	~clusterIterator();
+   //	~clusterIterator();
 };
 

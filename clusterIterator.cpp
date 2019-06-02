@@ -1,7 +1,3 @@
-//---------------------------------------------------------------------------
-
-#pragma hdrstop
-
 #include "clusterIterator.h"
 //---------------------------------------------------------------------------
 
@@ -41,13 +37,12 @@ BYTE* clusterIterator::GetCurrent(){
 			system("pause");
 			exit(GetLastError());
 	}
-	BOOL readResult = false;		// Инициализируем результат чтения файловой записи
+	BOOL readResult = false;
 	DWORD bytesReturned = 0;
 
-	// Чтение данных в buffer
 	readResult = ReadFile(fileHandle, buffer, bytesPerCluster, &bytesReturned, NULL);
 
-	if(!readResult || bytesReturned != bytesPerCluster) { // Обработка нарушения считывания диска
+	if(!readResult || bytesReturned != bytesPerCluster) {
 		cout << "Read boot record error: " << GetLastError() << endl;
 		delete[] buffer;
 		system("pause");

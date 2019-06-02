@@ -4,7 +4,7 @@
         <ProjectVersion>18.2</ProjectVersion>
         <FrameworkType>None</FrameworkType>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Console</AppType>
@@ -131,18 +131,41 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <BCC_PCHName_Clang>Project3PCH1.h</BCC_PCHName_Clang>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>(None)</Manifest_File>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <BCC_PCHName_Clang>Project3PCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <ItemGroup>
+        <CppCompile Include="clusterIterator.cpp">
+            <DependentOn>clusterIterator.h</DependentOn>
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
+        <None Include="clusterIterator.h">
+            <BuildOrder>9</BuildOrder>
+        </None>
         <CppCompile Include="driveClass.cpp">
             <DependentOn>driveClass.h</DependentOn>
             <BuildOrder>3</BuildOrder>
         </CppCompile>
+        <None Include="driveClass.h">
+            <BuildOrder>7</BuildOrder>
+        </None>
+        <CppCompile Include="exfatClass.cpp">
+            <DependentOn>exfatClass.h</DependentOn>
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
         <CppCompile Include="factoryClass.cpp">
             <DependentOn>factoryClass.h</DependentOn>
             <BuildOrder>5</BuildOrder>
+        </CppCompile>
+        <None Include="factoryClass.h">
+            <BuildOrder>8</BuildOrder>
+        </None>
+        <CppCompile Include="fatClass.cpp">
+            <DependentOn>fatClass.h</DependentOn>
+            <BuildOrder>12</BuildOrder>
         </CppCompile>
         <CppCompile Include="File1.cpp">
             <BuildOrder>1</BuildOrder>
@@ -151,14 +174,16 @@
             <DependentOn>fsClass.h</DependentOn>
             <BuildOrder>2</BuildOrder>
         </CppCompile>
-        <CppCompile Include="iteratorClass.cpp">
-            <DependentOn>iteratorClass.h</DependentOn>
-            <BuildOrder>4</BuildOrder>
-        </CppCompile>
+        <None Include="fsClass.h">
+            <BuildOrder>10</BuildOrder>
+        </None>
         <CppCompile Include="ntfsClass.cpp">
             <DependentOn>ntfsClass.h</DependentOn>
             <BuildOrder>6</BuildOrder>
         </CppCompile>
+        <None Include="ntfsClass.h">
+            <BuildOrder>11</BuildOrder>
+        </None>
         <PCHCompile Include="Project3PCH1.h">
             <BuildOrder>0</BuildOrder>
             <PCH>true</PCH>
@@ -186,6 +211,12 @@
                     <ProjectProperties Name="VerifyPackages">True</ProjectProperties>
                     <ProjectProperties Name="IndexFiles">False</ProjectProperties>
                 </ProjectProperties>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k250.bpl">Embarcadero C++Builder Office 2000 Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp250.bpl">Embarcadero C++Builder Office XP Servers Package</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k250.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp250.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </CPlusPlusBuilder.Personality>
             <Deployment Version="3">
                 <DeployFile LocalName=".\Win32\Debug\Project3.exe" Configuration="Debug" Class="ProjectOutput">
@@ -244,14 +275,14 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
-                    <Platform Name="OSX32">
+                <DeployFile LocalName=".\Win32\Release\Project3.exe" Configuration="Release" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>Project3.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\Win32\Debug\Project3.tds" Configuration="Debug" Class="DebugSymbols">
-                    <Platform Name="Win32">
-                        <RemoteName>Project3.tds</RemoteName>
+                <DeployFile LocalName="$(BDS)\Redist\osx32\libcgunwind.1.0.dylib" Class="DependencyModule">
+                    <Platform Name="OSX32">
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

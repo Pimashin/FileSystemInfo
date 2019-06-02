@@ -13,7 +13,6 @@
  int _tmain(int argc, _TCHAR* argv[])
 {
 using namespace std;
-	// ”знаем у пользовател€ им€ интересующего диска
 	wstring diskLetter = L"";
 	cout << endl << "Write the Letter of your Disk: ";
 	diskLetter += L"\\\\.\\";

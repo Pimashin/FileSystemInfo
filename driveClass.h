@@ -7,8 +7,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-
-#include "iteratorClass.h"
+#include "clusterIterator.h"
 
 class driveClass {
 private:

@@ -35,7 +35,7 @@ void fsClass::setFirstClusterToRead(){
 		 << getTotalClusters() - 1 + getFirstClusterNum() << "]" << endl;
 	cin >> firstClusterToRead;
 	if ((firstClusterToRead < getFirstClusterNum() || firstClusterToRead >= (getTotalClusters() + getFirstClusterNum()))) { // Проверка на корректность ввода
-		cout << "Choosen sector unavailable." << endl;
+		cout << "Chosen sector unavailable." << endl;
 		goto tryAgainEnterFirstCluster;
 	}
 	firstClusterToRead += getFsClustersOffset() - getFirstClusterNum();

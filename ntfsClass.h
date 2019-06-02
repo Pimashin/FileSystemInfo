@@ -14,6 +14,5 @@ public:
 	virtual DWORD getTotalClusters();
 	virtual FLOAT getFsClustersOffset();
 	virtual string getFsName();
-
 	~ntfsClass();
 };

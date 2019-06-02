@@ -2,10 +2,13 @@
 #include <iostream>
 #include "factoryClass.h"
 #include "ntfsClass.h"
-//#include "exfatClass.h"
-//#include "fatClass.h"
+#include "exfatClass.h"
+#include <cmath>
+#include <cstdlib>
 #include "string.h"
 #include <functional>
+#include "fatClass.h"
+#include <string>
 
 using namespace std;
 
@@ -23,23 +26,25 @@ fsClass* factoryClass::objCreator(driveClass* driveObj)
 	sectorOffset.QuadPart = 0;
 	fsOEMname *currentOEM = (fsOEMname*)driveObj->readRecords(sectorOffset, 1024, 1);
 
-  //	hash<string> hash_fn;
+	string NAME = currentOEM->OEM_Name;
 
-  //	switch ((unsigned int) hash_fn(currentOEM->OEM_Name)) {
-
-   //	case 3418147480:
-		return new ntfsClass(driveObj);
-	 //	break;
-	//case 968235445:
-	   //	return new exfatClass(driveObj);
-	//case 2150569743:
-	  //	return new fatClass(driveObj);
-   //	default:
-		cout << "This file system doesn`t support!" << endl;   // Обработка несоответствия
-		system("pause");
-		return 0;
-	   //	break;
+	if (NAME.compare("MSDOS5.0")==0) {
+	return new fatClass(driveObj);
+	cout << "FAT"<<endl;
 	}
-//}
+
+
+	if (NAME.compare("NTFS    ")==0) {
+	return new ntfsClass(driveObj);
+	cout << "NTFS"<<endl;
+	}
+
+	if (NAME.compare("EXFAT   ")==0) {
+	return new exfatClass(driveObj);
+	cout << "EXFAT"<<endl;
+	}
+	 // cout << currentOEM->OEM_Name<<endl;
+	}
+
 
 factoryClass::~factoryClass() { }

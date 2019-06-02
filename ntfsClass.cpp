@@ -21,7 +21,6 @@ ntfsClass::ntfsClass(driveClass* driveObj) : fsClass(driveObj)
 	sectorOffset.QuadPart = 0;
 	ntfsBootRecord *currentRecord = (ntfsBootRecord*)driveObj->readRecords(sectorOffset, 1024, 1);
 
-    // Придаем свойства объекту
 	bytesPerSector = *(WORD*)currentRecord->BytesPerSector;
 	sectorsPerCluster = currentRecord->SectorsPerCluster;
 	totalSectors = currentRecord->TotalSectors;

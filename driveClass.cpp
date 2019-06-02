@@ -1,27 +1,64 @@
-#pragma once
+#include "driveClass.h"
 
-#include <windows.h>
-#include <string>
-#include <iostream>
+using namespace std;
 
-#include <string>
-#include <iomanip>
+// Инициализация класса
+driveClass::driveClass(const WCHAR *fileName) {
+	//fileHandle = INVALID_HANDLE_VALUE;
 
-#include "iteratorClass.h"
+	// Открываем раздел диска.
+	if ((fileHandle = CreateFileW(fileName,
+		GENERIC_READ,       					// Режим доступа
+		FILE_SHARE_READ | FILE_SHARE_WRITE,     // Режим совместной работы
+		NULL,       							// Атрибуты безопасности
+		OPEN_EXISTING,      					// Способ открытия
+		0,      								// Флаги и атрибуты
+		NULL)) == INVALID_HANDLE_VALUE)	{
 
-class driveClass {
-private:
-	HANDLE fileHandle;				// Дескриптор файлового устройства (раздела диска)
+		wcout << "Read disk (" << fileName[4] <<")... can`t open!" << endl;
 
-public:
-	driveClass(const WCHAR *fileName);                           		// Конструктор
+		cout << "Error: " << GetLastError() << endl;        // Код ошибки
 
-	HANDLE getFileHandle();
+		system("pause");
+		exit(-1);
+	}
+}
 
-	BYTE *readRecords(LARGE_INTEGER sectorOffset, DWORD bytesPerCluster, DWORD numOfClustersToRead);
+HANDLE driveClass::getFileHandle(){
+	return fileHandle;
+}
 
-	void printHexBuffer(BYTE * buffer, DWORD bufferSize);     // Отображение буффера в HEX виде
+BYTE *driveClass::readRecords(LARGE_INTEGER sectorOffset, DWORD bytesPerCluster, DWORD numOfClustersToRead){
 
-	~driveClass();                                  // Деструктор
-};
+	BYTE* buffer = new BYTE;
+	clusterIterator * iterator = new clusterIterator(fileHandle, sectorOffset, bytesPerCluster, numOfClustersToRead);
+	iterator->First();
+	for(iterator->First(); !iterator->IsDone(); iterator->Next())
+	{
+		buffer = iterator->GetCurrent();
+	}
 
+	return buffer;
+}
+
+
+void driveClass::printHexBuffer(BYTE * buffer, DWORD bufferSize){
+	cout << "[----------------------   ----------------------]" << endl;
+	for (int i = 1; i < bufferSize + 1; i++) {
+		cout << hex << setw(2) << setfill('0') << DWORD(buffer[i - 1]) << " ";
+
+		if (i % 16 == 0) {
+			cout << endl;
+		}
+		else if (i % 8 == 0)
+		{
+			cout << "  ";
+		}
+	}
+	cout << "[----------------------   ----------------------]" << endl;
+    delete[] buffer;
+}
+
+driveClass::~driveClass() {
+	CloseHandle(fileHandle);
+}
